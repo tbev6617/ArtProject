@@ -60,7 +60,7 @@ public class ArtPanel extends JPanel
 		saveButton = new JButton("Save Image");
 		colorButton = new JButton("Change Color");
 		
-		setupSlider();
+		setupSliders();
 		setupPanel();
 		setupLayout();
 		setupListeners();
