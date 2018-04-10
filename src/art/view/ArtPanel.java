@@ -61,7 +61,7 @@ public class ArtPanel extends JPanel
 		scaleSlider = new JSlider(MINIMUM_SCALE, MAXIMUM_SCALE);
 		edgeSlider = new JSlider(MINIMUM_EDGE, MAXIMUM_EDGE);
 		
-		canvas = new ShapeCanvas();
+		canvas = new ShapeCanvas(app);
 		appLayout.putConstraint(SpringLayout.NORTH, canvas, 98, SpringLayout.NORTH, this);
 		appLayout.putConstraint(SpringLayout.WEST, canvas, 380, SpringLayout.WEST, this);
 		sliderPanel = new JPanel();
@@ -141,11 +141,27 @@ public class ArtPanel extends JPanel
 	}
 	private void setupListeners()
 	{
+		rectangleButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				Rectangle rectangle = createRectangle();
+				canvas.addShape(rectangle);
+			}
+		});
+		triangleButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				Polygon triangle = createPolygon(3);
+				canvas.addShape(triangle);
+			}
+		});
 		ellipseButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent click)
 			{
-				Ellipse2D ellipse = new createEllipse();
+				Ellipse2D ellipse = createEllipse();
 				canvas.addShape(ellipse);
 			}
 		});
@@ -223,4 +239,50 @@ public class ArtPanel extends JPanel
 		}
 		return currentRectangle;
 	}
+	private Ellipse2D createEllipse()
+	{
+		Ellipse2D ellipse = new Ellipse2D.Double();
+		
+		int cornerX = (int) (Math.random() * 600);
+		int cornerY = (int) (Math.random() * 600);
+		double width = Math.random() * currentScale + 1;
+		if (coinFlip())
+		{
+			ellipse.setFrame(cornerX, cornerY, width, width);
+		}
+		else
+		{
+			double height = Math.random() * currentScale + 1;
+			ellipse.setFrame(cornerX, cornerY, width, height);
+		}
+		
+		return ellipse;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
