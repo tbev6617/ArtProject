@@ -12,8 +12,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.*;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
@@ -80,7 +83,12 @@ public class ShapeCanvas extends JPanel
 		{
 			JFileChooser saveDialog = new JFileChooser();
 			saveDialog.showSaveDialog(app.getFrame());
-			
+			String savePath = saveDialog.getSelectedFile().getPath();
+			ImageIO.write(canvasImage, "PNG", new File(savePath));
+		}
+		catch(IOException error)
+		{
+			app.handleErrors(error);
 		}
 	}
 	
