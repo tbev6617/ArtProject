@@ -17,7 +17,7 @@ public class ArtFrame extends JFrame
 	
 	private void setupFrame()
 	{
-		this.setSize(1200, 700);
+		this.setSize(1000, 700);
 		this.setContentPane(appPanel);
 		this.setTitle("Creating Modern Art");
 		this.setVisible(true);

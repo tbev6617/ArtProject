@@ -7,6 +7,9 @@ import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
 import java.util.Hashtable;
 
@@ -62,14 +65,9 @@ public class ArtPanel extends JPanel
 		edgeSlider = new JSlider(MINIMUM_EDGE, MAXIMUM_EDGE);
 		
 		canvas = new ShapeCanvas(app);
-		appLayout.putConstraint(SpringLayout.NORTH, canvas, 98, SpringLayout.NORTH, this);
-		appLayout.putConstraint(SpringLayout.WEST, canvas, 380, SpringLayout.WEST, this);
+		appLayout.putConstraint(SpringLayout.NORTH, canvas, 30, SpringLayout.NORTH, this);
 		sliderPanel = new JPanel();
-		appLayout.putConstraint(SpringLayout.WEST, sliderPanel, 10, SpringLayout.WEST, this);
 		buttonPanel = new JPanel(new GridLayout(0, 1));
-		appLayout.putConstraint(SpringLayout.SOUTH, sliderPanel, 0, SpringLayout.SOUTH, buttonPanel);
-		appLayout.putConstraint(SpringLayout.NORTH, buttonPanel, 0, SpringLayout.NORTH, this);
-		appLayout.putConstraint(SpringLayout.WEST, buttonPanel, 40, SpringLayout.EAST, this);
 		
 		triangleButton = new JButton("Add Triangle");
 		rectangleButton = new JButton("Add Rectangle");
@@ -137,7 +135,13 @@ public class ArtPanel extends JPanel
 	}
 	private void setupLayout()
 	{
-		
+		appLayout.putConstraint(SpringLayout.NORTH, buttonPanel, 0, SpringLayout.NORTH, this);
+		appLayout.putConstraint(SpringLayout.WEST, buttonPanel, 40, SpringLayout.EAST, this);
+		appLayout.putConstraint(SpringLayout.WEST, canvas, 35, SpringLayout.EAST, sliderPanel);
+		appLayout.putConstraint(SpringLayout.NORTH, sliderPanel, 0, SpringLayout.NORTH, canvas);
+		appLayout.putConstraint(SpringLayout.WEST, sliderPanel, 34, SpringLayout.WEST, this);
+		appLayout.putConstraint(SpringLayout.SOUTH, sliderPanel, -420, SpringLayout.SOUTH, this);
+		appLayout.putConstraint(SpringLayout.EAST, sliderPanel, 269, SpringLayout.WEST, this);
 	}
 	private void setupListeners()
 	{
@@ -194,6 +198,61 @@ public class ArtPanel extends JPanel
 					currentEdgeCount = edgeSlider.getValue();
 				}
 			}
+		});
+		
+		canvas.addMouseMotionListener(new MouseMotionListener()
+		{
+			@Override
+			public void mouseDragged(MouseEvent drag)
+			{
+				int x = drag.getX();
+				int y = drag.getY();
+				canvas.drawLine(x, y, edgeSlider.getValue());
+			}
+
+			@Override
+			public void mouseMoved(MouseEvent e) 
+			{
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		canvas.addMouseListener(new MouseListener()
+		{
+
+			@Override
+			public void mouseClicked(MouseEvent e) 
+			{
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) 
+			{
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) 
+			{
+				canvas.resetLine();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) 
+			{
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) 
+			{
+				canvas.resetLine();
+			}
+			
 		});
 	}
 	private boolean coinFlip()
